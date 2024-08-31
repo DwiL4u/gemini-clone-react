@@ -10,8 +10,11 @@ import {
  * $ npm install @google/generative-ai
  */
 
+const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+if (!apiKey) {
+  throw new Error("API key is not defined.");
+}
 
-const apiKey = "AIzaSyCFtAIrcDnhQNovsb1duRv0fq3gSHNSbu0";
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
@@ -47,8 +50,7 @@ const safetySettings = [
 async function runChat(prompt) {
   const chatSession = model.startChat({
     generationConfig,
-    // safetySettings: Adjust safety settings
-    // See https://ai.google.dev/gemini-api/docs/safety-settings
+     safetySettings,
     history: [],
   });
 
